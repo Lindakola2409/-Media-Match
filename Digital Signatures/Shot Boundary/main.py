@@ -24,6 +24,8 @@ if __name__ == "__main__":
         
         """
         
+        # try to calculate max difference between next 30 frames
+
         if curr_frame is not None and prev_frame is not None:
             diff = cv2.absdiff(curr_frame, prev_frame)
             diff_sum = np.sum(diff)

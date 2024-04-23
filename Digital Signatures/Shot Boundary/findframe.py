@@ -80,7 +80,8 @@ class Frame:
 
             sum_start_id = last_max_frame.id + 1
             sum_end_id = max_diff_id - 1
-
+            # print(sum_start_id, sum_end_id)
+            # input()
 
             id_no = sum_start_id
             sum_diff = 0
@@ -93,6 +94,8 @@ class Frame:
                     break
 
             average_diff = sum_diff / (sum_end_id - sum_start_id + 1)
+            # print(average_diff)
+            # input()
             if max_diff_frame.diff >= (m_suddenJudge * average_diff):
                 possible_frame.append(max_diff_frame)
                 window_frame = []
