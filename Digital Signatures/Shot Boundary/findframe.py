@@ -94,7 +94,7 @@ class Frame:
                     break
 
             average_diff = sum_diff / (sum_end_id - sum_start_id + 1)
-            # print(average_diff)
+            # print(max_diff_frame.diff,average_diff)
             # input()
             if max_diff_frame.diff >= (m_suddenJudge * average_diff):
                 possible_frame.append(max_diff_frame)
@@ -111,11 +111,12 @@ class Frame:
         get the index of the first and last frame of a shot
         
         """
+
         for i in range(0, len(possible_frame)):
-            start_id_spot.append(possible_frame[i].id)
-            end_id_spot.append(possible_frame[i].id - 1)
+            start_id_spot.append(possible_frame[i].id) # The first frame of a shot
+            end_id_spot.append(possible_frame[i].id - 1) # The last frame of the previous shot
 
-
+        # The last frame of the video
         sus_last_frame = possible_frame[-1]
         last_frame = list_frames[-1]
         if sus_last_frame.id < last_frame.id:
@@ -151,10 +152,10 @@ class Frame:
                 continue
             """
             
-            check whether the difference is more than twice the average difference of 
-            the previous 10 frames and the subsequent 10 frames.
+            # check whether the difference is more than twice the average difference of 
+            # the previous 10 frames and the subsequent 10 frames.
             
-            """
+            # """
             #get the previous 10 frames
             pre_start_id = tag_id - frame_count
             pre_end_id = tag_id - 1
@@ -192,7 +193,7 @@ class Frame:
             #check whether the requirement is met or not
             if tag_frame.diff > (diff_optimize * average_diff):
                 new_tag_frames.append(tag_frame)
-
+            # new_tag_frames.append(tag_frame)
         """
 
         get the index of the first and last frame of a shot
