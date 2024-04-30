@@ -1,8 +1,8 @@
 import webbrowser
 
-video = "../Video Dataset/video6.mp4"
+video = "../Video Dataset/video8.mp4"
 
-frame = 12416
+frame = 15747
 start_time = frame / 30
 
 html_content = f"""
