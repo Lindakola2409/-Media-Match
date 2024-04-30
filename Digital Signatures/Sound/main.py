@@ -73,17 +73,6 @@ def find_best_match(query_signature):
             best_match = video_path
     return best_match
 
-def find_best_match(query_features):
-    min_distance = float('inf')
-    best_match = None
-    for video_path, features in database.items():
-        distance = np.linalg.norm(query_features - features)
-        if distance < min_distance:
-            min_distance = distance
-            best_match = video_path
-    return best_match
-
-
 def find_exact_frame(matched_video, query_mfcc, hop_length=512, win_length=2048):
     """Finds the exact frame in the matched video that corresponds to the start of the query video."""
     audio_path = extract_audio_from_video(matched_video)
