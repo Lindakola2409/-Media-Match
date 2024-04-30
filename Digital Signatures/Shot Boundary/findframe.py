@@ -44,9 +44,9 @@ class Frame:
         """
         possible_frame = []
         window_frame = []
-        window_size = 30 # Try different window sizes for hard and soft cuts
-        m_suddenJudge = 3
-        m_MinLengthOfShot = 8
+        window_size = 45 # Try different window sizes for hard and soft cuts
+        m_suddenJudge = 4
+        m_MinLengthOfShot = 5
         start_id_spot = []
         start_id_spot.append(0)
         end_id_spot = []
@@ -67,8 +67,10 @@ class Frame:
             max_diff_frame = self.getMAXdiff(window_frame)
             max_diff_id = max_diff_frame.id
 
+            # fix to ensure the first possible frame isnt repeated
             if len(possible_frame) == 0:
                 possible_frame.append(max_diff_frame)
+                window_frame = []
                 continue
             last_max_frame = possible_frame[-1]
 
@@ -80,8 +82,6 @@ class Frame:
 
             sum_start_id = last_max_frame.id + 1
             sum_end_id = max_diff_id - 1
-            # print(sum_start_id, sum_end_id)
-            # input()
 
             id_no = sum_start_id
             sum_diff = 0
@@ -94,8 +94,7 @@ class Frame:
                     break
 
             average_diff = sum_diff / (sum_end_id - sum_start_id + 1)
-            # print(max_diff_frame.diff,average_diff)
-            # input()
+
             if max_diff_frame.diff >= (m_suddenJudge * average_diff):
                 possible_frame.append(max_diff_frame)
                 window_frame = []
@@ -131,9 +130,11 @@ class Frame:
             optimize the possible frame
 
         '''
+
+        # fix to make the window min(10, len(tag_frames))
         new_tag_frames = []
         frame_count = 10
-        diff_threshold = 10
+        diff_threshold = 15
         diff_optimize = 2
         start_id_spot = []
         start_id_spot.append(0)
