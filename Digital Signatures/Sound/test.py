@@ -10,8 +10,9 @@ def extract_audio_from_video(video_path):
 
 
 def main():
-    query_video_path = "../../Video Dataset/Query Videos/video7alt2_1_modified.mp4"
-    path = extract_audio_from_video(query_video_path)
+    #query_video_path = "../../Video Dataset/Query Videos/video10_1_modified.mp4"
+    original_video_path = "../../Video Dataset/video20.mp4"
+    path = extract_audio_from_video(original_video_path)
     print(path)
 
 

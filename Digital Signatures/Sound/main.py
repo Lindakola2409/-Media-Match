@@ -99,8 +99,7 @@ def find_exact_frame(matched_video, query_mfcc, n_mfcc=13, hop_length=512, win_l
     if matched_video is None:
         return 1000000, 0
     y, sr = librosa.load(matched_video, sr=None)
-    mfccs = database[matched_video]
-    print("Query" + str(query_mfcc.shape))
+    mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc, hop_length=hop_length, win_length=win_length)
     #compare the two mfccs
     num_frames = mfccs.shape[1] - query_mfcc.shape[1] + 1
     min_distance = float('inf')
@@ -123,12 +122,12 @@ def run_all_tests():
 def run_single_test(index):
     print("Query Video", index)
     time_start = timeit.default_timer()
-    # query_audio_path = "../../Video Dataset/Query Videos/video" + str(index) + "_1_modified.wav"
-    query_audio_path = "../../Video Dataset/Query Videos/video7alt2_1_modified.wav"
+    query_audio_path = "../../Video Dataset/Query Videos/video" + str(index) + "_1_modified.wav"
+    #query_audio_path = "../../Video Dataset/Query Videos/video7alt2_1_modified.wav"
     query_mfcc = compute_mfcc(query_audio_path)
     best_match, second_match, third_match = find_best_three_matches(query_mfcc.mean(axis=1))
-    # min_val, frame_time = find_exact_frame(best_match, query_mfcc)
-    best_match = "../../Video Dataset/video7.wav"
+    min_val, frame_time = find_exact_frame(best_match, query_mfcc)
+    #best_match = "../../Video Dataset/video7.wav"
     min_val, frame_time = find_exact_frame(best_match, query_mfcc)
     min_val2, frame_time2 = find_exact_frame(second_match, query_mfcc)
     min_val3, frame_time3 = find_exact_frame(third_match, query_mfcc)
@@ -159,20 +158,15 @@ def run_single_test(index):
     print("Query starts at frame index:", frame_index)
 
 
-def run_single_test2(index):
-    print("Query Video", index)
-    time_start = timeit.default_timer()
-    query_audio_path = "../../Video Dataset/Query Videos/video" + str(index) + "_1_modified.wav"
-    #query_audio_path = "../../Video Dataset/Query Videos/video7_1_modified.wav"
-    query_mfcc = compute_mfcc(query_audio_path).mean(axis=1)
-    best_match = None
-    for key in database.keys():
-        print(key)
-        min_val, frame_time = find_exact_frame(key, query_mfcc)
-        if best_match is None or min_val < best_match[0]:
-            best_match = (min_val, frame_time, key)
-    min_val, frame_time, best_match = best_match
-    print("Matched Video:", best_match)
+# This function finds the exact frame, prints it, and returns the frame index
+# The Index refers to the original video index
+def run_single_test2(query_index, original_index):
+    video_template_string = "../../Video Dataset/video" + str(original_index) + ".mp4"
+    query_audio_path = "../../Video Dataset/Query Videos/video" + str(query_index) + "_1_modified.wav"
+    query_mfcc = compute_mfcc(query_audio_path)
+    min_val, frame_time = find_exact_frame(video_template_string, query_mfcc)
+    print("Query Video", query_index)
+    print("Matched Video:", video_template_string)
     print("Query starts at time:", frame_time, "seconds")
     # Print in minutes and seconds
     minutes = int(frame_time // 60)
@@ -180,13 +174,20 @@ def run_single_test2(index):
     seconds = int(round(frame_time % 60))
     print("Query starts at time:", minutes, "minutes and", seconds, "seconds")
     frame_index = int(frame_time * 30)  # 30 FPS
-    # Print time elasped for each query video
-    print("Time Elapsed: ", timeit.default_timer() - time_start)
     print("Query starts at frame index:", frame_index)
+    return frame_index
+
+
+# Function to run tests on a list of video indices
+def run_tests(query, video_indices):
+    for index in video_indices:
+        run_single_test2(query, index)
 
 
 if __name__ == "__main__":
-    preprocess_database()  # Uncomment this line to preprocess the database initially
-    #populate_database()
-    run_all_tests()
-    #run_single_test2(1)
+    #preprocess_database()  # Uncomment this line to preprocess the database initially
+    populate_database()
+    #run_all_tests()
+    videos_to_test_against = [1, 2, 3]
+    query_index = 1
+    run_tests(query_index, videos_to_test_against)
