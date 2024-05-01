@@ -98,7 +98,7 @@ def find_exact_frame(matched_video, query_chroma, hop_length=512, win_length=204
 if __name__ == "__main__":
     #preprocess_database()  # Uncomment this line to preprocess the database initially
     populate_database()
-    query_video_path = "../../Video Dataset/Query Videos/video6_1_modified.mp4"
+    query_video_path = "../../Video Dataset/Query Videos/video7alt_1_modified.mp4"
     query_audio_path = extract_audio_from_video(query_video_path)
     query_chroma = compute_chroma(query_audio_path)
     matched_video = find_best_match(query_chroma.mean(axis=1))

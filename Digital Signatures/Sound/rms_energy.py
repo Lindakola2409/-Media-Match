@@ -61,7 +61,7 @@ def find_best_match(query_rms):
 def main():
     #preprocess_database()
     populate_database()
-    query_video_path = "../../Video Dataset/Query Videos/video9_1_modified.mp4"
+    query_video_path = "../../Video Dataset/Query Videos/video7alt_1_modified.mp4"
     query_audio_path = extract_audio_from_video(query_video_path)
     query_rms = compute_features(query_audio_path)
     matched_video = find_best_match(query_rms)
