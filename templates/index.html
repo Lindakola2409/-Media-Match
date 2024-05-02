@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Video Player</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div id="description">
+
+            <div class="title">
+                <h1>576 Final Project</h1>
+            </div>
+            <h2>Created By: Steven Alexander, Rohan Thomas, Linda Tam</h2>
+            <h6>
+                After exploring modes of creating digital signatures we decided that motion gave us the most
+                accurate results.
+            </h6>
+
+
+
+        </div>
+
+        <span class="inlineBlock">
+            <div class="VideoPlayerClass">
+                <span class="inlineBlock">
+                    <h3>Original Video</h3>
+                </span>
+                <span class="inlineBlock">
+                    <p id="sourceDisplay">{{ original_video_path }}</p>
+                </span>
+                <video id="videoPlayer" controls>
+                    <source id="videoSourceElement" src="{{ url_for('static', filename=original_video_path) }}"
+                        type="video/mp4">
+                    type="video/mp4">
+                    Your browser doesn't support this video
+                </video>
+                <div id="controls">
+                    <button onclick="playPause()">Play/Pause</button>
+                    <button onclick="reset()">Reset</button>
+                </div>
+            </div>
+            <div class="VideoPlayerClass">
+                <span class="inlineBlock">
+                    <h3>Query Video</h3>
+                </span>
+                <span class="inlineBlock">
+                    <p id="QuerySourceDisplay">{{ query_video_path }}</p>
+                </span>
+                <video id="QueryVideoPlayer" controls>
+                    <source id="QueryVideoSourceElement" src="{{ url_for('static', filename=query_video_path) }}"
+                        type="video/mp4">
+                    Your browser doesn't support this video
+                </video>
+
+                <div id="QueryControls">
+                    <button onclick="playPauseQuery()">Play/Pause</button>
+                </div>
+            </div>
+        </span>
+
+        <div id="Results">
+            <span class="inlineBlock">
+                <h3> Results: </h3>
+            </span>
+            <span class="inlineBlock">
+                <!-- Frame number -->
+                <div id="frameNumber">
+                    <h4>Frame:<h4>
+                            <p> {{ matching_frame }}</p>
+                </div>
+                <div id="similarity">
+                    <h4>Similarity:<h4>
+                            <p> {{ percent }}%</p>
+                </div>
+                <div id="filePath">
+                    <h4>Matched with Video:<h4>
+                            <p> {{ videoPath }}</p>
+
+                </div>
+                <div id="timestamp">
+                    <h4>Timestamp:<h4>
+                            <p> {{ timestampStr }}</p>
+                </div>
+            </span>
+        </div>
+    </div>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var videoPlayer = document.getElementById("videoPlayer");
+
+            // Function to play the video from the specified timestamp
+
+            // Call the playFromTimestamp function with the desired timestamp
+            videoPlayer.currentTime = '{{ time_stamp }}';
+            videoPlayer.play();
+
+            function updateSourceDisplayOriginal() {
+                var sourcePath = sourceElement.src;
+                var parts = sourcePath.split('/');
+                var filename = parts[parts.length - 1];
+                sourceDisplay.textContent = filename;
+            }
+
+            // Getting variables element
+            var queryVideoPlayer = document.getElementById("QueryVideoPlayer");
+            var querySourceElement = document.getElementById("QueryVideoSourceElement");
+            var querySourceDisplay = document.getElementById("QuerySourceDisplay");
+
+            // Function to update the source display for the query video
+            function updateSourceDisplayQuery() {
+                var sourcePath = querySourceElement.src;
+                var parts = sourcePath.split('/');
+                var filename = parts[parts.length - 1];
+                querySourceDisplay.textContent = filename;
+            }
+        });
+
+        function playPause() {
+            var videoPlayer = document.getElementById("videoPlayer");
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+            } else {
+                videoPlayer.pause();
+            }
+        }
+
+        function reset() {
+            var videoPlayer = document.getElementById("videoPlayer");
+            videoPlayer.currentTime = '{{ time_stamp }}';
+            videoPlayer.pause();
+        }
+
+        function playPauseQuery() {
+            var videoPlayer = document.getElementById("QueryVideoPlayer");
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+            } else {
+                videoPlayer.pause();
+            }
+        }
+        const video = document.getElementById("player");
+        reset();
+    </script>
+
+
+
+</body>
+
+</html>
