@@ -1,0 +1,171 @@
+.container {
+    position: relative;
+}
+
+.VideoPlayerClass {
+    margin: 20px;
+    height: auto;
+}
+
+#QueryControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+h6 {
+    font-size: 16px;
+    font-weight: normal;
+    font-size: 1vw;
+}
+
+button {
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: #1abaff;
+    border: 0.2vw solid #1abaff;
+    background-color: white;
+    color: #1abaff;
+    padding: 10px;
+    font-size: 2vw;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1abaff;
+    color: white;
+}
+
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+#description {
+    margin: 40px;
+}
+
+
+span.inlineBlock {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+body {
+    background-color: #e9f9ff;
+    margin: auto;
+    padding: 10px;
+    align-items: center;
+    font-family: "Quicksand", sans-serif;
+    font-size: 1vw;
+}
+
+select {
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: #1abaff;
+    border-width: 20px;
+    border: 2px solid #1abaff;
+    background-color: white;
+    color: #1abaff;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 6vw;
+    font-family: "Quicksand", sans-serif;
+    margin: 0px;
+
+}
+
+h2 {
+    font-size: 3vw;
+    font-family: "Quicksand", sans-serif;
+    font-weight: normal;
+    margin: 0px;
+}
+
+h3 {
+    font-size: 3vw;
+    font-family: "Quicksand", sans-serif;
+    font-weight: normal;
+    margin: 0px;
+}
+
+
+
+#filePath {
+    text-align: center;
+    justify-content: center;
+}
+
+#QueryVideoPlayer {
+    width: 40vw;
+}
+
+#videoPlayer {
+    width: 40vw;
+}
+
+#VideoPlayerClass {
+    width: 40vw;
+}
+
+#Results {
+    /* background-color: rgba(1, 1, 1, 0.2); */
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 2vw;
+    text-align: left;
+}
+
+#frameNumber {
+    background-color: rgba(1, 1, 1, 0.2);
+    padding: 20px;
+    border-radius: 20px;
+    width: 20vw;
+    text-align: center;
+}
+
+#similarity {
+    background-color: rgba(1, 1, 1, 0.2);
+    padding: 20px;
+    border-radius: 20px;
+    width: 20vw;
+    text-align: center;
+}
+
+#filePath {
+    background-color: rgba(1, 1, 1, 0.2);
+    padding: 20px;
+    border-radius: 20px;
+    width: 20vw;
+    text-align: center;
+}
+
+#timestamp {
+    background-color: rgba(1, 1, 1, 0.2);
+    padding: 20px;
+    border-radius: 20px;
+    width: 200px;
+    text-align: center;
+}
+
+h4{
+    font-family: "Quicksand", sans-serif;
+    font-weight: normal;
+    margin: 0px;
+}
