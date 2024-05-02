@@ -162,10 +162,10 @@ def motion_best(motion_score):
     motion_score = {re.search('static/video(.+?).mp4',k).group(1):v for k,v in motion_score.items()}
     motion_score = sorted(motion_score.items(), key=lambda x: x[1]['percentage'], reverse=True)
     highest_score = motion_score[0][1]['percentage']
-    # Do we need 99.9% check?
     top_scores = list(filter(lambda x: (highest_score - x[1]['percentage'] < 5),motion_score[:3]))
+    if top_scores[0][1]['percentage'] == 99.9:
+        return {top_scores[0][0]:top_scores[0][1]}
     top_scores = {i[0]:i[1] for i in top_scores}
-    print("Top scores:",top_scores)
     return top_scores
 
 @app.route('/')
@@ -221,27 +221,29 @@ def index():
         motion_scores.update(remaining_scores)
 
         top_scores = motion_best(motion_scores)
+        print("Top scores:",top_scores)
         if len(top_scores) == 1: # only one video is within 5% score range
             bestMatchPath = "static/video"+list(top_scores.keys())[0]+".mp4"
             bestFrame = motion_scores[bestMatchPath]['frame']
             bestPercent = motion_scores[bestMatchPath]['percentage']
         else:
-            # Do we need Weiner Filter?
 
             # if more than one video is within 5% score range, run audio signature
             audio_score = audio(queryAudioPath, list(top_scores.keys()))
-            print("Audio score:",audio_score)
+            print("Audio Scores:",audio_score)
 
-            # REPLACE this with sum calculation and comparison
-            bestMatchPath = "static/video"+list(top_scores.keys())[0]+".mp4"
+            # Compare weighted sum of squares
+            bestScore = 0  
+            for i in audio_score.keys():
+                score = (round((1-audio_score[i][1])*100,1))**2 + top_scores[i]['percentage']**2*1.21 # 1.21 is the weight for motion score
+                if score > bestScore:
+                    bestScore = score
+                    bestMatchPath = "static/video"+i+".mp4"
             bestFrame = motion_scores[bestMatchPath]['frame']
             bestPercent = motion_scores[bestMatchPath]['percentage']
 
-            # compare weighted sum of squares
-
-
     # Calculate timestamp
-    tempFrame = (bestFrame - 1)
+    tempFrame = (bestFrame)
     timestamp = tempFrame / FRAMERATE / 60
     second, minute = math.modf(timestamp)
     second = second * 60
