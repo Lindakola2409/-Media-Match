@@ -208,7 +208,7 @@ def index():
         motion_scores = motion(query_motion_signature, filtered_database_motion_signatures)
         for i in shots.keys():
             path = "static/video"+i+".mp4"
-            if motion_scores[path]['frame']-1 in shots[i] and motion_scores[path]['percentage'] > bestPercent:
+            if motion_scores[path]['frame']-1 in shots[i] and motion_scores[path]['percentage'] > 85 and motion_scores[path]['percentage'] > bestPercent:
                 bestMatchPath = path
                 bestFrame = motion_scores[bestMatchPath]['frame']
                 bestPercent = motion_scores[bestMatchPath]['percentage']
