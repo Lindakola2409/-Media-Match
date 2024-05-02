@@ -106,6 +106,9 @@ def find_exact_frame(matched_video, query_mfcc, n_mfcc=13, hop_length=512, win_l
     best_frame_index = 0
     for i in range(num_frames):
         current_frame_mfcc = mfccs[:, i:i + query_mfcc.shape[1]]
+        # normalize query_mfcc and current_frame_mfcc
+        query_mfcc = query_mfcc / np.linalg.norm(query_mfcc)
+        current_frame_mfcc = current_frame_mfcc / np.linalg.norm(current_frame_mfcc)
         distance = np.linalg.norm(query_mfcc - current_frame_mfcc)
         if distance < min_distance:
             min_distance = distance
