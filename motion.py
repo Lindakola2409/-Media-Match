@@ -235,12 +235,18 @@ def index():
             # Compare weighted sum of squares
             bestScore = 0  
             for i in audio_score.keys():
-                score = (round((1-audio_score[i][1])*100,1))**2 + top_scores[i]['percentage']**2*1.21 # 1.21 is the weight for motion score
+                scoreAudio =  (round((1-audio_score[i][1])*100,1))**2
+                scoreMotion = top_scores[i]['percentage']**2*1.21 # 1.21 is the weight for motion score
+                score = scoreAudio + scoreMotion
                 if score > bestScore:
                     bestScore = score
                     bestMatchPath = "static/video"+i+".mp4"
-            bestFrame = motion_scores[bestMatchPath]['frame']
-            bestPercent = motion_scores[bestMatchPath]['percentage']
+                    if scoreAudio > scoreMotion: # Trust audio score more
+                        bestFrame = audio_score[i][0]+1
+                        bestPercent = round((1-audio_score[i][1])*100,1)
+                    else: # Trust motion score more
+                        bestFrame = motion_scores[bestMatchPath]['frame']
+                        bestPercent = motion_scores[bestMatchPath]['percentage']
 
     # Calculate timestamp
     tempFrame = (bestFrame)
